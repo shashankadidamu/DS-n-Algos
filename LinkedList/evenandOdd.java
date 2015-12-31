@@ -1,3 +1,5 @@
+//Given a LinkedList with even and odd no's, Alg to make changes to list in such a way that all even No's appear at beginning 
+
 class Node{
 	int data;
 	Node next;
