@@ -37,6 +37,8 @@ class LinkedList{
 		System.out.print("null"+"\n");
 	}
 
+
+
 	
 }
 
@@ -88,6 +90,12 @@ class mergeSortedLists{
 		return head;
 	}
 
+	public static void printfromend(Node h){
+		if(h==null)
+			return;
+		printfromend(h.next);
+		System.out.println(h.data);
+	}
 	public static void main(String[] args){
 		LinkedList l1= new LinkedList();
 		LinkedList l2 = new LinkedList();
@@ -105,5 +113,6 @@ class mergeSortedLists{
 		Node temp=mergeTwoLists(l1.head,l2.head);
 		//result.insert(temp.data);
 		result.printlist(temp);
+		printfromend(resultlist.head);
 	}
 }
