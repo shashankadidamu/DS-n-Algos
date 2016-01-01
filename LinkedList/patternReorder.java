@@ -1,3 +1,5 @@
+//Given a list L1->L2->...->L(n-1)->L(n), reorder it to: L1->L(n)->L2->L(n-1)->.. 
+
 class Node{
 	int data;
 	Node next;
@@ -12,6 +14,32 @@ class Node{
 	}
 }
 
+//Basic stack implementation
+class stack{
+	Node top;
+	
+	void push(int d){
+		//hm.put(d,d);
+		Node temp=new Node(d);
+		temp.next=top;
+		top=temp;
+	}
+
+	int pop(){
+		int temp=0;
+		if(top!=null){
+			temp=top.data;
+			top=top.next;
+		}
+		return temp;
+	}
+
+	int peek(){
+		return top.data;
+	}
+}
+
+//LinkedList 
 class LinkedList{
 	Node head=null;
 	Node end=null;
@@ -36,6 +64,7 @@ class LinkedList{
 		System.out.print("null"+"\n");
 	}
 
+	//Finding length of Linkedlist
 	public int length(){
 		int count=0;
 		Node temp=head;
@@ -45,6 +74,7 @@ class LinkedList{
 		}
 		return count;
 	}
+
 
 	public int getKth(int k){
 			
@@ -58,14 +88,12 @@ class LinkedList{
 				p2 = p2.next;
 		}
 
-
 		while(p2.next!=null){
 			p1=p1.next;
 			p2=p2.next;
 		}
 		return p1.data;
 
-	
 	}
 	public LinkedList reorder(){
 		int len= 0;
@@ -82,6 +110,38 @@ class LinkedList{
 		if(len%2!=0)
 			newlist.insert(temphead.data);
 		return newlist;
+	} 
+
+
+	public Node getNodes(int len){
+		Node temp=head;
+		for(int i=1;i<len;i++){
+			temp=temp.next;
+		}
+		return temp.next;
+	}
+
+	//Reordering using Stack
+	public LinkedList newReorder(){
+		int len=0;
+		len=length();
+		stack tempStack =new stack();
+		LinkedList newlist=new LinkedList();
+		Node temphead=head;
+		Node temp= getNodes(len/2);
+		while(temp!=null){
+			tempStack.push(temp.data);
+			temp=temp.next;
+		}
+		for(int i=1;i<=len/2;i++){
+			newlist.insert(temphead.data);
+			newlist.insert(tempStack.pop());
+			temphead=temphead.next;
+		}
+		if(len%2!=0)
+			newlist.insert(temphead.data);
+
+		return newlist;
 	}
 }
 
@@ -92,9 +152,18 @@ class patternReorder{
 		l1.insert(2);
 		l1.insert(3);
 		l1.insert(4);
-		//l1.insert(5);
+		l1.insert(5);
 		l1.printlist();
-		LinkedList l2=l1.reorder();
+		LinkedList l2=l1.newReorder();
 		l2.printlist();
+		LinkedList l3= l1.reorder();
+		l3.printlist();
 	}
 }
+
+
+/*output:
+1->2->3->4->5->null
+1->5->2->4->3->null
+1->5->2->4->3->null
+*/
