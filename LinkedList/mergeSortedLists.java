@@ -27,8 +27,8 @@ class LinkedList{
 		end.next=newnode;
 		end=newnode;
 	}
-	public void printlist(){
-		Node temp=head;
+	public void printlist(Node lhead){
+		Node temp=lhead;
 
 		while(temp!=null){
 			System.out.print(temp.data+"->");
@@ -42,6 +42,7 @@ class LinkedList{
 
 class mergeSortedLists{
 
+	//iterative
 	public static LinkedList sortedMerge(Node l1,Node l2){
 		Node temphead1 = l1;
 		Node temphead2 = l2;
@@ -69,19 +70,40 @@ class mergeSortedLists{
 		return result;
 	}
 
+	//Recursive
+	public static Node mergeTwoLists(Node head1, Node head2){
+		if(head1==null)
+			return head2;
+		if(head2==null)
+			return head1;
+		Node head= new Node();
+		if(head1.data<=head2.data){
+			head=head1;
+			head.next= mergeTwoLists(head1.next,head2);
+		}
+		else{
+			head=head2;
+			head.next=mergeTwoLists(head1,head2.next);
+		}
+		return head;
+	}
+
 	public static void main(String[] args){
 		LinkedList l1= new LinkedList();
 		LinkedList l2 = new LinkedList();
 		LinkedList resultlist= new LinkedList();
+		LinkedList result = new LinkedList();
 		l1.insert(1);
 		l1.insert(3);
 		l1.insert(6);
 		l2.insert(4);
 		l2.insert(5);
-		l1.printlist();
-		l2.printlist();
+		l1.printlist(l1.head);
+		l2.printlist(l2.head);
 		resultlist= sortedMerge(l1.head,l2.head);
-		resultlist.printlist();
-		
+		resultlist.printlist(resultlist.head);
+		Node temp=mergeTwoLists(l1.head,l2.head);
+		//result.insert(temp.data);
+		result.printlist(temp);
 	}
 }
