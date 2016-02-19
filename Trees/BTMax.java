@@ -78,12 +78,17 @@ class bt{
 
      }
     
-	public int maxInBT(){
+	public int maxInBTwithRecursion(){
 		int a = maxInBTsupport(root);
 		return a;
 	}
 
-/* function to find maximum element in Binary tree */
+	public int maxInBTwithoutRecursion(){
+		int b = maxInBTwithoutRecursionSupport(root);
+		return b;
+	}
+
+/* function to find maximum element in Binary tree with Recursion*/
 
 	public int maxInBTsupport(BTNode root){
 	int max = Integer.MIN_VALUE;
@@ -100,6 +105,29 @@ class bt{
 	}
 		return max;
 	}
+
+// function to find maximum element in Binary Tree without recursion //
+
+	public int maxInBTwithoutRecursionSupport(BTNode root){
+		int max = Integer.MIN_VALUE;
+		Queue<BTNode> q = new LinkedList<BTNode>();
+		q.offer(root);
+		while(!q.isEmpty()){
+			BTNode temp = q.poll();
+			if(temp.data> max){
+				max = temp.data;
+			}
+			if(temp!=null){
+				if(temp.getleft()!=null)
+					q.offer(temp.left);
+				if(temp.getright()!=null)
+					q.offer(temp.right);
+			}
+		}
+		return max;
+
+	}
+
 	
 }
 
@@ -117,6 +145,7 @@ public class BTMax{
 			bt1.insert(10);
 			bt1.insert(15);
 			bt1.inordertraversalrec(bt1.root);
-		System.out.println("\n"+"Max in BT: "+bt1.maxInBT());
+		System.out.println("\n"+"Max in BT without Recursion: "+bt1.maxInBTwithoutRecursion());
+		System.out.println("\n"+"Max in BT with Recursion : "+bt1.maxInBTwithRecursion());
 	}
 }
